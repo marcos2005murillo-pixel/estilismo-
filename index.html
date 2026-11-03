@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171713">
+<meta name="description" content="ARCHIVE 001 — archivo de prendas y selección personalizada de moda de segunda mano.">
+<title>ARCHIVE 001 — Second-hand, selected</title>
+<style>
+:root{
+  --bg:#171713;--panel:#20201b;--panel2:#282820;--ink:#f0eee7;--muted:#aaa99d;
+  --line:rgba(240,238,231,.18);--khaki:#8b8a68;--brown:#8b6d52;--silver:#c7c8c1;
+  --red:#a64a40;--max:1240px;--ease:cubic-bezier(.2,.75,.25,1)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+body.modal-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+img{display:block;max-width:100%}
+::selection{background:var(--khaki);color:#111}
+.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}
+.eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.serif{font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.script{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:400;font-style:italic}
+.leopard{display:inline-block;padding:.25rem .55rem;background:repeating-linear-gradient(135deg,#4a3c2d 0 4px,#a28a69 4px 7px,#25221c 7px 10px);border:1px solid #74634c;color:#f4e7d2;font-size:.56rem;letter-spacing:.17em;text-transform:uppercase}
+header{position:sticky;top:0;z-index:20;background:rgba(23,23,19,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-size:.9rem;letter-spacing:.19em;font-weight:700;white-space:nowrap}
+.logo span{color:var(--khaki)}
+.navlinks{display:flex;gap:28px;align-items:center;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}
+.navlinks a{color:var(--muted);transition:color .2s}
+.navlinks a:hover,.navlinks a:focus{color:var(--ink)}
+.navright{display:flex;align-items:center;gap:12px}
+.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 17px;border:1px solid var(--ink);background:var(--ink);color:#191914;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.nav-cta:hover,.btn:hover{background:transparent;color:var(--ink);transform:translateY(-2px)}
+.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.secondary:hover{border-color:var(--khaki);color:#d4d2b2}
+.btn.small{padding:9px 12px;font-size:.62rem}
+.menu-toggle{display:none;background:none;color:var(--ink);border:1px solid var(--line);padding:9px 12px}
+.hero{min-height:650px;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:70px 0 84px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:440px;height:440px;border:1px solid rgba(139,138,104,.16);border-radius:50%;right:18%;top:12%;pointer-events:none}
+.hero-copy{position:relative;z-index:1}
+.hero-kicker{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.hero h1{font-size:clamp(4.2rem,10vw,9.5rem);line-height:.78;letter-spacing:-.085em;margin:0 0 28px;font-weight:500}
+.hero h1 span{display:block;color:var(--khaki);font-family:Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.1em;margin-left:.6em}
+.hero p{max-width:440px;color:#c0bfb4;font-size:.98rem;margin:0 0 30px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px}
+.hero-note{margin-top:45px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:22px;flex-wrap:wrap;color:var(--muted);font-size:.66rem;text-transform:uppercase;letter-spacing:.13em}
+.hero-art{height:500px;position:relative;z-index:1}
+.hero-art img{height:100%;width:100%;object-fit:cover;filter:grayscale(.5) brightness(.75);border:1px solid var(--line)}
+.art-label{position:absolute;bottom:25px;left:-22px;background:var(--khaki);color:#161611;padding:15px 18px;max-width:210px;transform:rotate(-3deg)}
+.art-label strong{display:block;font-family:Georgia,serif;font-size:1.4rem;font-weight:400}
+.art-index{position:absolute;top:16px;right:16px;border:1px solid rgba(255,255,255,.5);padding:8px 10px;font-size:.65rem;letter-spacing:.15em}
+.ticker{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:13px 0;color:var(--silver);font-family:Georgia,serif;font-style:italic;font-size:1rem}
+.ticker-track{display:flex;width:max-content;gap:38px;animation:marquee 32s linear infinite}
+.ticker-track span:after{content:"✳";margin-left:38px;color:var(--khaki);font-style:normal;font-size:.8rem}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.section{padding:100px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:32px}
+.section-head h2{font-size:clamp(2.6rem,5vw,5rem);letter-spacing:-.065em;line-height:.92;margin:10px 0 0;font-weight:400}
+.section-head h2 em{font-family:Georgia,serif;color:var(--khaki);font-weight:400}
+.section-intro{max-width:330px;color:var(--muted);font-size:.85rem}
+.catalog{background:#1b1b16;border-block:1px solid var(--line)}
+.toolbar{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter{background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 13px;text-transform:uppercase;letter-spacing:.1em;font-size:.62rem}
+.filter.active,.filter:hover{background:var(--khaki);border-color:var(--khaki);color:#171711}
+.search{width:min(260px,100%);padding:10px 12px;background:transparent;border:1px solid var(--line);color:var(--ink);outline:none;font-size:.78rem}
+.search:focus{border-color:var(--khaki)}
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 16px}
+.product-card{min-width:0;animation:rise .55s var(--ease) both}
+.product-photo{position:relative;aspect-ratio:3/4;background:var(--panel2);overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.product-photo img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease),filter .5s}
+.product-card:hover .product-photo img{transform:scale(1.045);filter:brightness(.85)}
+.product-tag{position:absolute;top:12px;left:12px;background:rgba(23,23,19,.88);padding:6px 8px;font-size:.56rem;text-transform:uppercase;letter-spacing:.12em}
+.heart{position:absolute;top:9px;right:9px;width:37px;height:37px;border-radius:50%;background:rgba(23,23,19,.82);color:var(--ink);border:1px solid var(--line);font-size:1.15rem}
+.heart.active{color:#d78d82;border-color:var(--red)}
+.product-meta{padding:13px 1px 0}
+.product-title-row{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.product-title{font-family:Georgia,serif;font-size:1.12rem;line-height:1.15}
+.product-price{font-size:.8rem;white-space:nowrap}
+.product-sub{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.67rem;margin-top:7px}
+.product-open{margin-top:12px;background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);padding:0 0 4px;font-size:.62rem;text-transform:uppercase;letter-spacing:.13em}
+.empty-state{padding:40px 0;color:var(--muted);text-align:center;grid-column:1/-1}
+.service{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.service-aside{position:sticky;top:110px}
+.service-aside h2{font-size:clamp(3.1rem,6vw,6rem);line-height:.86;letter-spacing:-.08em;font-weight:400;margin:20px 0}
+.service-aside h2 span{display:block;color:var(--brown);font-family:Georgia,serif;font-style:italic}
+.service-aside p{max-width:390px;color:var(--muted)}
+.stamp{display:inline-block;border:1px solid var(--brown);color:#c6a88c;padding:9px 12px;transform:rotate(-4deg);font-size:.61rem;letter-spacing:.18em;text-transform:uppercase;margin:10px 0 25px}
+.service-content{border-top:1px solid var(--line)}
+.service-row{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:25px 0;border-bottom:1px solid var(--line)}
+.service-num{font-family:Georgia,serif;color:var(--khaki);font-size:1.4rem}
+.service-row h3{font-size:1rem;font-weight:500;margin:0 0 7px}
+.service-row p{font-size:.81rem;color:var(--muted);margin:0;max-width:510px}
+.price-table{margin-top:26px;border:1px solid var(--line)}
+.price-head,.price-line{display:grid;grid-template-columns:1fr auto;gap:20px;padding:13px 15px}
+.price-head{background:var(--panel2);font-size:.61rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.price-line{border-top:1px solid var(--line);font-size:.79rem}
+.price-line strong{font-weight:500}
+.price-line span:last-child{font-family:Georgia,serif;font-size:1rem}
+.fineprint{font-size:.7rem;color:var(--muted);margin-top:14px}
+.dossier{background:#22221c;border-block:1px solid var(--line)}
+.dossier-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.dossier-image{position:relative;min-height:490px;background:#333329;overflow:hidden}
+.dossier-image img{width:100%;height:490px;object-fit:cover;filter:grayscale(.55) contrast(1.04);opacity:.88}
+.dossier-image:after{content:"";position:absolute;inset:16px;border:1px solid rgba(240,238,231,.38);pointer-events:none}
+.image-caption{position:absolute;left:30px;bottom:30px;background:var(--bg);padding:12px 16px;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase}
+.dossier-copy h2{font-size:clamp(2.8rem,5vw,5rem);line-height:.9;letter-spacing:-.07em;font-weight:400;margin:15px 0 25px}
+.dossier-copy h2 em{color:var(--khaki);font-family:Georgia,serif}
+.dossier-copy p{color:var(--muted);font-size:.87rem}
+.checklist{list-style:none;padding:0;margin:25px 0}
+.checklist li{border-bottom:1px solid var(--line);padding:12px 0;font-size:.79rem}
+.checklist li:before{content:"↗";color:var(--khaki);margin-right:12px}
+.request{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}
+.request-copy h2{font-size:clamp(3rem,6vw,5.8rem);line-height:.86;letter-spacing:-.08em;font-weight:400;margin:14px 0 22px}
+.request-copy h2 em{font-family:Georgia,serif;color:var(--khaki)}
+.request-copy p{max-width:370px;color:var(--muted);font-size:.86rem}
+.form-card{background:var(--panel);border:1px solid var(--line);padding:28px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;background:#171713;border:1px solid var(--line);color:var(--ink);padding:12px;outline:none;border-radius:0}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--khaki)}
+.field textarea{min-height:110px;resize:vertical}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.69rem;color:var(--muted);margin:18px 0}
+.consent input{margin-top:3px;accent-color:var(--khaki)}
+.form-message{display:none;margin-top:14px;padding:12px;border:1px solid var(--khaki);color:#d6d6b9;font-size:.78rem}
+.form-message.show{display:block}
+.admin{padding-top:30px}
+.admin-toggle{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);padding:15px 17px;background:transparent;color:var(--muted);width:100%;text-align:left;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+.admin-panel{display:none;border:1px solid var(--line);border-top:0;padding:22px;background:#1b1b16}
+.admin-panel.open{display:block}
+.admin-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.admin-stat{background:var(--panel);padding:16px;border:1px solid var(--line)}
+.admin-stat span{display:block;color:var(--muted);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em}
+.admin-stat strong{display:block;font:2rem Georgia,serif;margin-top:5px}
+.demo-orders{width:100%;border-collapse:collapse;font-size:.74rem}
+.demo-orders th,.demo-orders td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}
+.demo-orders th{font-size:.59rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:400}
+.status{display:inline-block;padding:4px 7px;background:rgba(139,138,104,.16);color:#c8c8a6;font-size:.59rem;text-transform:uppercase;letter-spacing:.06em}
+.status.review{background:rgba(166,74,64,.17);color:#d88b81}
+footer{border-top:1px solid var(--line);padding:35px 0 25px}
+.footer-top{display:flex;justify-content:space-between;gap:25px;align-items:start}
+.footer-brand{font-size:1rem;letter-spacing:.17em}
+.footer-brand small{display:block;color:var(--muted);font-size:.65rem;letter-spacing:.08em;margin-top:9px}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;font-size:.68rem;color:var(--muted)}
+.footer-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:35px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.62rem}
+.modal{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.8);padding:24px;overflow:auto;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.modal-card{position:relative;width:min(820px,100%);display:grid;grid-template-columns:1fr 1fr;background:var(--panel);border:1px solid var(--line);max-height:90vh;overflow:auto}
+.modal-card img{width:100%;height:100%;min-height:430px;object-fit:cover}
+.modal-copy{padding:35px 28px;align-self:center}
+.modal-copy h3{font:2.5rem/1 Georgia,serif;margin:15px 0}
+.modal-copy p{color:var(--muted);font-size:.85rem}
+.modal-price{font:1.5rem Georgia,serif;margin:22px 0}
+.modal-close{position:absolute;right:10px;top:10px;width:36px;height:36px;background:#171713;color:white;border:1px solid var(--line);font-size:1.2rem;z-index:1}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:60;background:var(--ink);color:var(--bg);padding:12px 18px;font-size:.75rem;transition:all .3s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr  .8fr;min-height:560px}.hero-art{height:390px}
+ .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .service,.request{gap:38px}.dossier-grid{gap:35px}
+ .navlinks{gap:15px}
+}
+@media(max-width:680px){
+ .wrap{width:min(100% - 32px,var(--max))}
+ .nav{height:64px}.menu-toggle{display:inline-flex}
+ .navlinks{display:none;position:absolute;left:0;right:0;top:64px;background:#1c1c17;border-bottom:1px solid var(--line);padding:20px 24px;flex-direction:column;align-items:flex-start;gap:18px}
+ .navlinks.open{display:flex}.nav-cta{display:none}
+ .hero{display:flex;flex-direction:column;align-items:stretch;padding:55px 0 58px;gap:35px;min-height:0}
+ .hero h1{font-size:clamp(4.5rem,20vw,7rem)}.hero-art{height:390px;margin-left:14px}
+ .hero:after{width:250px;height:250px;right:-90px;top:28%}.art-label{left:-14px}
+ .hero-note{margin-top:30px;gap:12px}
+ .section{padding:70px 0}.section-head{align-items:start;flex-direction:column;margin-bottom:25px}
+ .section-head h2{font-size:3.4rem}.section-intro{max-width:100%}
+ .toolbar{align-items:stretch}.filters{gap:6px}.filter{padding:8px 10px;font-size:.57rem}
+ .search{width:100%}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}
+ .product-title{font-size:1rem}.product-sub{font-size:.61rem}
+ .service,.request,.dossier-grid{grid-template-columns:1fr;gap:35px}
+ .service-aside{position:static}.service-aside h2{font-size:4.5rem}
+ .dossier-image,.dossier-image img{height:370px;min-height:370px}
+ .request-copy h2{font-size:4.5rem}
+ .form-card{padding:18px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+ .admin-cards{grid-template-columns:1fr}
+ .demo-orders{min-width:520px}.table-scroll{overflow-x:auto}
+ .footer-top,.footer-bottom{flex-direction:column}
+ .modal{padding:12px;align-items:flex-start}.modal-card{grid-template-columns:1fr;max-height:none}
+ .modal-card img{height:320px;min-height:0}.modal-copy{padding:25px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ .reveal{opacity:1;transform:none}
+}
+
+.admin-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 12px}
+.admin-toolbar h3{font:1.25rem Georgia,serif;margin:0}
+.admin-action,.order-action{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 12px;font-size:.65rem;letter-spacing:.07em;text-transform:uppercase}
+.orders-list{display:grid;gap:10px}
+.order-card{border:1px solid var(--line);background:var(--panel);padding:16px}
+.order-card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.order-ref{font-size:.6rem;letter-spacing:.14em;color:var(--khaki);text-transform:uppercase}
+.order-card h4{font-size:1rem;font-weight:500;margin:5px 0}
+.order-meta{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere}
+.order-description{font-size:.78rem;white-space:pre-wrap;color:var(--muted);margin:12px 0}
+.order-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
+.order-controls select{background:#171713;border:1px solid var(--line);color:var(--ink);padding:8px;font-size:.7rem;max-width:100%}
+.empty-admin{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);font-size:.8rem}
+.cost-calculator{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cost-calculator label{display:flex;flex-direction:column;gap:7px;color:var(--muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.08em}
+.cost-calculator input,.cost-calculator select{width:100%;min-width:0;background:#171713;color:var(--ink);border:1px solid var(--line);padding:11px}
+.cost-help{display:block;color:var(--muted);font-size:.62rem;line-height:1.45;letter-spacing:0;text-transform:none;font-weight:400}
+.cost-total{grid-column:span 2;background:var(--panel2);padding:12px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cost-total strong{font:1.5rem Georgia,serif;color:var(--ink)}
+@media(max-width:650px){.admin-cards{grid-template-columns:1fr}.cost-calculator{grid-template-columns:1fr 1fr}.cost-total{grid-column:1/-1}.admin-toolbar{align-items:flex-start;flex-direction:column}.order-card-top{flex-direction:column}}
+
+
+[hidden]{display:none!important}
+.upload-help{font-size:.68rem;color:var(--muted);line-height:1.5}
+.upload-preview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-top:8px}
+.upload-preview:empty{display:none}
+.upload-preview figure{margin:0;border:1px solid var(--line);background:var(--panel2);padding:5px;min-width:0}
+.upload-preview img{width:100%;aspect-ratio:1;object-fit:cover}
+.upload-preview figcaption{font-size:.58rem;color:var(--muted);overflow-wrap:anywhere;padding:5px 1px 0}
+.field input[type=file]{padding:10px;background:#171713;font-size:.72rem}
+.owner-app{min-height:100vh;background:var(--bg);padding:35px 0 70px}
+.owner-wrap{width:min(1100px,calc(100% - 40px));margin:auto}
+.owner-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:35px}
+.owner-mark{font-size:.9rem;letter-spacing:.19em;font-weight:700}
+.owner-mark span{color:var(--khaki)}
+.owner-login{width:min(480px,100%);margin:9vh auto 0;padding:32px;background:var(--panel);border:1px solid var(--line)}
+.owner-login h1{font:clamp(2.3rem,6vw,4rem)/.95 Georgia,serif;margin:14px 0}
+.owner-login p{font-size:.82rem;color:var(--muted)}
+.owner-login form{display:grid;gap:12px;margin-top:24px}
+.owner-login input{width:100%;padding:13px;background:#171713;border:1px solid var(--line);color:var(--ink)}
+.owner-login-help{font-size:.68rem;color:var(--muted)}
+.owner-login-help code{color:#ddd9c7}
+.owner-top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.owner-top-actions a,.owner-top-actions button{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);background:transparent;border:1px solid var(--line);padding:9px 12px}
+.owner-title{font:clamp(2rem,4vw,3.2rem) Georgia,serif;margin:0}
+.owner-note{font-size:.78rem;color:var(--muted);margin:8px 0 22px;max-width:760px}
+.order-contact{font-size:.72rem;color:var(--muted);margin-top:5px;overflow-wrap:anywhere}
+.order-attachments{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px}
+.order-attachment{width:112px;border:1px solid var(--line);background:var(--panel2);padding:5px;display:block}
+.order-attachment img{width:100%;aspect-ratio:1;object-fit:cover}
+.order-attachment span{display:block;font-size:.58rem;color:var(--muted);overflow-wrap:anywhere;padding-top:5px}
+.order-no-attachments{font-size:.68rem;color:var(--muted)}
+@media(max-width:650px){.upload-preview{grid-template-columns:repeat(3,minmax(0,1fr))}.owner-app{padding-top:20px}.owner-login{padding:22px}.owner-head{align-items:flex-start;flex-direction:column}.order-attachment{width:calc(33.333% - 7px)}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#inicio" aria-label="ARCHIVE 001, inicio">ARCHIVE <span>001</span></a>
+    <nav class="navlinks" id="navlinks" aria-label="Navegación principal">
+      <a href="#catalogo">Archivo</a><a href="#servicio">Selección personal</a><a href="#proceso">Proceso</a><a href="#solicitud">Solicitar</a>
+    </nav>
+    <div class="navright">
+      <a class="nav-cta" href="#solicitud">Crear selección ↗</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <div class="hero-kicker"><span class="leopard">Curated second-hand</span><span class="eyebrow">Madrid · Est. 001</span></div>
+      <h1>SECOND<br>HAND<span>selected.</span></h1>
+      <p>Una mirada personal a la moda de segunda mano. Prendas con historia, búsquedas con intención y un archivo que crece pieza a pieza.</p>
+      <div class="hero-actions"><a class="btn" href="#catalogo">Explorar archivo ↘</a><a class="btn secondary" href="#servicio">Cómo funciona</a></div>
+      <div class="hero-note"><span>01 — Archivo personal</span><span>02 — Selección a medida</span><span>03 — Menos, mejor</span></div>
+    </div>
+    <div class="hero-art">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Editorial de moda urbana en tonos neutros" fetchpriority="high">
+      <div class="art-index">FIG. 001 / EDITORIAL</div>
+      <div class="art-label"><span class="eyebrow" style="color:#28271f">A different kind of archive</span><strong>Find your piece.</strong><span class="script" style="font-size:1.3rem">Diva selection</span></div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-label="Archivo, selección, segunda mano">
+    <div class="ticker-track"><span>Wear it again</span><span>Personal archive</span><span>Found, not manufactured</span><span>Second-hand stories</span><span>Wear it again</span><span>Personal archive</span><span>Found, not manufactured</span><span>Second-hand stories</span></div>
+  </div>
+
+  <section class="section catalog" id="catalogo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">01 / El archivo</div><h2>Pieces with<br><em>another life.</em></h2></div>
+        <p class="section-intro">Una selección de prendas del archivo. Consulta la ficha para ver talla, estado y detalles. Las piezas mostradas son ejemplos de diseño y se pueden sustituir por tus prendas reales.</p>
+      </div>
+      <div class="toolbar">
+        <div class="filters" id="filters" aria-label="Filtrar prendas">
+          <button class="filter active" data-filter="all">Todo</button>
+          <button class="filter" data-filter="tops">Tops</button>
+          <button class="filter" data-filter="bottoms">Pantalones</button>
+          <button class="filter" data-filter="outerwear">Abrigos</button>
+          <button class="filter" data-filter="accessories">Accesorios</button>
+        </div>
+        <input class="search" id="searchInput" type="search" placeholder="Buscar en el archivo…" aria-label="Buscar prendas">
+      </div>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section" id="servicio">
+    <div class="wrap service">
+      <div class="service-aside reveal">
+        <div class="eyebrow">02 / Personal sourcing</div>
+        <h2>Not just<br>shopping.<span>A point of view.</span></h2>
+        <div class="stamp">One brief. Your own edit.</div>
+        <p>Cuéntame qué buscas, tu presupuesto y qué te gusta. Busco opciones de segunda mano que encajen contigo y te enseño cada propuesta antes de comprar nada.</p>
+        <a class="btn" href="#solicitud">Pedir una selección ↗</a>
+      </div>
+      <div class="service-content reveal">
+        <div class="service-row"><div class="service-num">01</div><div><h3>Me cuentas la idea</h3><p>Estilo, tallas, marcas, colores, prendas que necesitas y presupuesto total. Cuantos más detalles, mejor será la búsqueda.</p></div></div>
+        <div class="service-row"><div class="service-num">02</div><div><h3>Busco y te envío opciones</h3><p>Preselecciono artículos de plataformas de segunda mano. Revisas enlaces, fotos, estado y coste estimado y decides cuáles autorizas.</p></div></div>
+        <div class="service-row"><div class="service-num">03</div><div><h3>Confirmas y adelantas el presupuesto</h3><p>Antes de comprar, confirmamos por escrito las prendas y el presupuesto. No compro artículos sin autorización y fondos disponibles.</p></div></div>
+        <div class="service-row"><div class="service-num">04</div><div><h3>Recibo, reviso y preparo</h3><p>Cuando llegan, compruebo visualmente las prendas y te envío fotos e incidencias detectadas. Después cerramos el coste final y el envío.</p></div></div>
+        <div class="price-table">
+          <div class="price-head"><span>Selección por número de prendas</span><span>Comisión orientativa</span></div>
+          <div class="price-line"><span>1–3 prendas</span><span>8 €</span></div>
+          <div class="price-line"><span>4–5 prendas</span><span>14 €</span></div>
+          <div class="price-line"><span>6–8 prendas</span><span>21 €</span></div>
+          <div class="price-line"><span>9–12 prendas</span><span>28 €</span></div>
+        </div>
+        <p class="fineprint">Comisiones provisionales por el servicio de búsqueda. El coste de las prendas, los gastos de plataforma y envío hasta mí, el embalaje/preparación y el envío final se calculan aparte y se detallan antes de confirmar. El dinero no utilizado sigue siendo tuyo. Condiciones definitivas y derechos de compra sujetos a la normativa aplicable y a las condiciones de cada plataforma.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dossier" id="proceso">
+    <div class="wrap dossier-grid">
+      <div class="dossier-image reveal">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1100&q=85" alt="Inspiración de estilismo y moda de segunda mano" loading="lazy">
+        <div class="image-caption">Field notes / personal wardrobe</div>
+      </div>
+      <div class="dossier-copy reveal">
+        <div class="eyebrow">03 / The method</div>
+        <h2>Considered.<br><em>Not complicated.</em></h2>
+        <p>No se trata de comprar por comprar. Se trata de buscar con criterio, comparar opciones y encontrar prendas que de verdad tengan sentido para tu armario.</p>
+        <ul class="checklist">
+          <li>Presupuesto acordado antes de comprar</li>
+          <li>Tu aprobación para cada artículo</li>
+          <li>Costes separados y explicados</li>
+          <li>Fotos e incidencias al recibir las prendas</li>
+          <li>Sin prometer disponibilidad ni estado que no se haya comprobado</li>
+        </ul>
+        <a class="btn secondary" href="#solicitud">Cuéntame qué buscas ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="solicitud">
+    <div class="wrap request">
+      <div class="request-copy reveal">
+        <div class="eyebrow">04 / Your brief</div>
+        <h2>Let's find<br><em>your piece.</em></h2>
+        <p>Cuéntanos qué buscas y prepararemos una propuesta ajustada a tus preferencias y presupuesto. En esta versión de prueba, las solicitudes se guardan únicamente en el navegador desde el que se envían.</p>
+        <div class="leopard">Archive request · 001</div>
+      </div>
+      <div class="form-card reveal">
+        <form id="requestForm">
+          <div class="form-grid">
+            <div class="field"><label for="name">Nombre</label><input id="name" name="name" autocomplete="name" required placeholder="Cómo te llamas"></div>
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></div>
+            <div class="field"><label for="phone">Teléfono de contacto</label><input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="Ej. 612 345 678"></div>
+            <div class="field"><label for="budget">Presupuesto total (€)</label><input id="budget" name="budget" type="number" min="1" max="10000" required placeholder="Ej. 100"></div>
+            <div class="field"><label for="quantity">Número de prendas</label><select id="quantity" name="quantity" required><option value="">Seleccionar</option><option>1–3 prendas</option><option>4–5 prendas</option><option>6–8 prendas</option><option>9–12 prendas</option></select></div>
+            <div class="field"><label for="size">Talla habitual</label><input id="size" name="size" placeholder="Ej. M / 38 / 40"></div>
+            <div class="field full"><label for="wish">¿Qué prendas buscas?</label><textarea id="wish" name="wish" required placeholder="Marcas, colores, referencias, enlaces, qué no te gusta, medidas…"></textarea></div>
+            <div class="field full"><label for="referenceImages">Imágenes de referencia (opcional)</label><input id="referenceImages" name="referenceImages" type="file" accept="image/*" multiple><span class="upload-help">Puedes adjuntar hasta 5 imágenes (máximo 5 MB cada una). Mejor fotografías de prendas, detalles o referencias visuales.</span><div class="upload-preview" id="uploadPreview" aria-live="polite"></div></div>
+            <div class="field full"><label for="notes">Notas extra (opcional)</label><textarea id="notes" name="notes" placeholder="Fecha límite, necesidades concretas u otros detalles"></textarea></div>
+          </div>
+          <label class="consent"><input type="checkbox" id="consent" required><span>Entiendo que esta versión de prueba guarda la solicitud solo en este navegador y no la envía realmente a ARCHIVE 001. No introduzcas datos reales ni información sensible.</span></label>
+          <button class="btn" type="submit">Preparar solicitud ↗</button>
+          <div class="form-message" id="formMessage" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">ARCHIVE <span style="color:var(--khaki)">001</span><small>SECOND-HAND, SELECTED WITH INTENTION.</small></div>
+      <div class="footer-links"><a href="#catalogo">Archivo</a><a href="#servicio">Selección personal</a><a href="#solicitud">Contacto</a><a href="#inicio">Volver arriba ↑</a><a href="?view=owner">Acceso propietario ↗</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> ARCHIVE 001 · Concepto en desarrollo</span><span>Less noise. Better finds.</span></div>
+  </div>
+</footer>
+
+
+<section class="owner-app" id="ownerApp" hidden>
+  <div class="owner-wrap">
+    <div class="owner-head">
+      <div class="owner-mark">ARCHIVE <span>001</span> <span style="color:var(--muted);font-weight:400;letter-spacing:.1em">/ PRIVATE DESK</span></div>
+      <div class="owner-top-actions"><a href="?">Ver web pública ↗</a></div>
+    </div>
+    <div class="owner-login" id="ownerLogin">
+      <div class="eyebrow">Acceso reservado · Propietario</div>
+      <h1>Private<br>desk.</h1>
+      <p>Este acceso separa la gestión interna de la web que ven los clientes.</p>
+      <form id="ownerLoginForm">
+        <label class="field"><span class="eyebrow">Clave de demostración</span><input id="ownerPin" type="password" autocomplete="current-password" placeholder="Introduce la clave" required></label>
+        <div class="owner-login-help">Clave provisional para probar esta versión: <code>001</code></div>
+        <button class="btn" type="submit">Entrar al panel ↗</button>
+        <div class="form-message" id="ownerLoginMessage" role="alert"></div>
+      </form>
+      <p class="fineprint">Prototipo local: esta clave solo simula la pantalla de acceso. No protege datos reales.</p>
+    </div>
+    <div id="ownerDashboard" hidden>
+      <div class="admin-toolbar">
+        <div><div class="eyebrow">Private desk · Propietario</div><h1 class="owner-title">Solicitudes y pedidos</h1></div>
+        <div class="owner-top-actions"><button type="button" id="ownerLogout">Cerrar sesión</button></div>
+      </div>
+      <p class="owner-note">Aquí aparecen los datos y las imágenes que se hayan guardado en este mismo navegador. Todavía no hay sincronización entre dispositivos ni autenticación segura.</p>
+      <div class="admin-panel open">
+        <div class="admin-cards">
+          <div class="admin-stat"><span>Total de solicitudes</span><strong id="ordersTotal">0</strong></div>
+          <div class="admin-stat"><span>En curso</span><strong id="ordersActive">0</strong></div>
+          <div class="admin-stat"><span>Presupuesto solicitado</span><strong id="ordersBudget">0 €</strong></div>
+        </div>
+        <div class="admin-toolbar">
+          <h3>Solicitudes recibidas</h3>
+          <button class="admin-action" id="exportOrders" type="button">Exportar copia JSON ↓</button>
+        </div>
+        <div id="ordersList" class="orders-list"><p class="empty-admin">Todavía no hay solicitudes.</p></div>
+        <div class="admin-toolbar admin-toolbar-bottom"><h3>Costes de una selección (calculadora)</h3></div>
+        <div class="cost-calculator">
+          <label>Prendas (€)<input id="costItems" type="number" min="0" step="0.01" value="0"></label>
+          <label>Envíos de compra (€)<input id="costInbound" type="number" min="0" step="0.01" value="0"><small class="cost-help">Suma de los envíos de los vendedores hasta ti. Si varias prendas llegan juntas en un paquete, cuenta ese envío una sola vez.</small></label>
+          <label>Comisión por selección<select id="costCommission"><option value="8">1–3 prendas · 8 €</option><option value="14">4–5 prendas · 14 €</option><option value="21">6–8 prendas · 21 €</option><option value="28">9–12 prendas · 28 €</option></select></label>
+          <label>Otros gastos de compra (€)<input id="costOther" type="number" min="0" step="0.01" value="0"><small class="cost-help">Opcional: tasas u otros cargos de la plataforma que no estén incluidos en el precio de las prendas ni en el envío.</small></label>
+          <label>Embalaje (€)<input id="costPackaging" type="number" min="0" step="0.01" value="0"></label>
+          <label>Envío final (€)<input id="costOutbound" type="number" min="0" step="0.01" value="0"></label>
+          <div class="cost-total"><span>Total estimado</span><strong id="costTotal">8,00 €</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar ficha">×</button>
+    <img id="modalImage" src="" alt="">
+    <div class="modal-copy">
+      <div class="eyebrow" id="modalCategory">ARCHIVE ITEM</div>
+      <h3 id="modalTitle">Nombre de prenda</h3>
+      <div class="modal-price" id="modalPrice">—</div>
+      <p id="modalDescription"></p>
+      <p id="modalDetails"></p>
+      <button class="btn secondary" id="modalFavorite">♡ Guardar en favoritos</button>
+      <p class="fineprint">Artículo de muestra para el prototipo. Sustituye la información y las imágenes por datos reales antes de publicar.</p>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const products = [
+ {id:1,name:"Camisa de algodón",brand:"Vintage / archive",category:"tops",categoryLabel:"Top",size:"M",condition:"Muy buen estado",price:18,color:"Crudo",tag:"Selected",image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=80",description:"Camisa de corte relajado y tono neutro, fácil de combinar en capas."},
+ {id:2,name:"Denim straight leg",brand:"Denim study",category:"bottoms",categoryLabel:"Pantalón",size:"38",condition:"Buen estado",price:24,color:"Azul lavado",tag:"Archive find",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=80",description:"Vaquero de corte recto con lavado clásico y aire noventero."},
+ {id:3,name:"Blazer estructurado",brand:"Tailoring / vintage",category:"outerwear",categoryLabel:"Abrigo",size:"M",condition:"Muy buen estado",price:32,color:"Marrón oscuro",tag:"One of a kind",image:"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=80",description:"Blazer de inspiración vintage con estructura marcada y silueta atemporal."},
+ {id:4,name:"Bolso de diario",brand:"Accessories file",category:"accessories",categoryLabel:"Accesorio",size:"Única",condition:"Buen estado",price:16,color:"Negro",tag:"Small detail",image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80",description:"Bolso compacto pensado para dar un toque discreto a un conjunto sencillo."},
+ {id:5,name:"Top minimal",brand:"Basics / archive",category:"tops",categoryLabel:"Top",size:"S",condition:"Muy buen estado",price:12,color:"Negro",tag:"Essential",image:"https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80",description:"Una pieza básica, limpia y versátil para combinar durante todo el año."},
+ {id:6,name:"Pantalón de pinzas",brand:"Tailoring / file",category:"bottoms",categoryLabel:"Pantalón",size:"40",condition:"Buen estado",price:22,color:"Caqui",tag:"Soft tailoring",image:"https://images.unsplash.com/photo-1506629905607-d9a9d9e7e8b5?auto=format&fit=crop&w=900&q=80",description:"Pantalón de pinzas con una caída relajada y color neutro."},
+ {id:7,name:"Chaqueta utilitaria",brand:"Utility archive",category:"outerwear",categoryLabel:"Abrigo",size:"L",condition:"Buen estado",price:29,color:"Verde oliva",tag:"Field notes",image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=80",description:"Chaqueta funcional con referencias workwear y un tono verde apagado."},
+ {id:8,name:"Gafas retro",brand:"Accessories file",category:"accessories",categoryLabel:"Accesorio",size:"Única",condition:"Buen estado",price:10,color:"Carey",tag:"Final touch",image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80",description:"Gafas de estética retro; revisa siempre medidas y estado antes de comprar."}
+];
+const favorites = new Set();
+let currentFilter = "all";
+let searchText = "";
+let activeModalId = null;
+const grid = document.getElementById("productGrid");
+const euro = n => new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+function renderProducts(){
+ const list = products.filter(p => (currentFilter==="all"||p.category===currentFilter) && (p.name+" "+p.brand+" "+p.color+" "+p.categoryLabel).toLowerCase().includes(searchText));
+ grid.innerHTML = "";
+ if(!list.length){grid.innerHTML='<div class="empty-state">No hay prendas que coincidan con la búsqueda.</div>';return}
+ list.forEach((p,i)=>{
+  const card=document.createElement("article");
+  card.className="product-card";
+  card.style.animationDelay=(i*.045)+"s";
+  card.innerHTML=`
+   <div class="product-photo">
+    <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80'">
+    <span class="product-tag">${p.tag}</span>
+    <button class="heart ${favorites.has(p.id)?"active":""}" data-heart="${p.id}" aria-label="${favorites.has(p.id)?"Quitar de":"Añadir a"} favoritos" aria-pressed="${favorites.has(p.id)}">${favorites.has(p.id)?"♥":"♡"}</button>
+   </div>
+   <div class="product-meta">
+    <div class="product-title-row"><span class="product-title">${p.name}</span><span class="product-price">${euro(p.price)}</span></div>
+    <div class="product-sub"><span>${p.brand}</span><span>Talla ${p.size}</span></div>
+    <button class="product-open" data-open="${p.id}">Ver ficha ↗</button>
+   </div>`;
+  grid.appendChild(card);
+ });
+}
+function showToast(text){
+ const toast=document.getElementById("toast");toast.textContent=text;toast.classList.add("show");
+ clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),2400);
+}
+function toggleFavorite(id){
+ if(favorites.has(id)){favorites.delete(id);showToast("Eliminado de favoritos")}
+ else{favorites.add(id);showToast("Guardado en favoritos")}
+ renderProducts();
+}
+function openProduct(id){
+ const p=products.find(x=>x.id===id);if(!p)return;activeModalId=id;
+ document.getElementById("modalImage").src=p.image;
+ document.getElementById("modalImage").alt=p.name;
+ document.getElementById("modalCategory").textContent=p.categoryLabel+" / "+p.brand;
+ document.getElementById("modalTitle").textContent=p.name;
+ document.getElementById("modalPrice").textContent=euro(p.price);
+ document.getElementById("modalDescription").textContent=p.description;
+ document.getElementById("modalDetails").textContent="Talla: "+p.size+" · Estado: "+p.condition+" · Color: "+p.color;
+ const fav=document.getElementById("modalFavorite");fav.textContent=favorites.has(id)?"♥ Guardado en favoritos":"♡ Guardar en favoritos";
+ document.getElementById("productModal").classList.add("open");document.body.classList.add("modal-open");
+ document.getElementById("modalClose").focus();
+}
+function closeModal(){document.getElementById("productModal").classList.remove("open");document.body.classList.remove("modal-open")}
+document.getElementById("filters").addEventListener("click",e=>{
+ const b=e.target.closest("[data-filter]");if(!b)return;
+ currentFilter=b.dataset.filter;
+ document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));
+ renderProducts();
+});
+document.getElementById("searchInput").addEventListener("input",e=>{searchText=e.target.value.trim().toLowerCase();renderProducts()});
+grid.addEventListener("click",e=>{
+ const heart=e.target.closest("[data-heart]");if(heart){toggleFavorite(Number(heart.dataset.heart));return}
+ const open=e.target.closest("[data-open]");if(open)openProduct(Number(open.dataset.open));
+});
+document.getElementById("modalClose").addEventListener("click",closeModal);
+document.getElementById("productModal").addEventListener("click",e=>{if(e.target.id==="productModal")closeModal()});
+document.getElementById("modalFavorite").addEventListener("click",()=>{if(activeModalId!==null){toggleFavorite(activeModalId);document.getElementById("modalFavorite").textContent=favorites.has(activeModalId)?"♥ Guardado en favoritos":"♡ Guardar en favoritos"}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("menuToggle").addEventListener("click",()=>{
+ const nav=document.getElementById("navlinks"),btn=document.getElementById("menuToggle"),open=nav.classList.toggle("open");
+ btn.setAttribute("aria-expanded",String(open));btn.textContent=open?"×":"☰";
+});
+document.querySelectorAll("#navlinks a").forEach(a=>a.addEventListener("click",()=>{
+ document.getElementById("navlinks").classList.remove("open");document.getElementById("menuToggle").setAttribute("aria-expanded","false");document.getElementById("menuToggle").textContent="☰";
+}));
+const ORDER_STORAGE_KEY = "archive001_demo_orders_v1";
+const IMAGE_DB_NAME = "archive001_demo_images_v1";
+const IMAGE_STORE_NAME = "orderImages";
+const DEMO_OWNER_PIN = "001"; // Solo para la demostración local; no es autenticación segura.
+const ORDER_STATUSES = ["Nueva solicitud","Revisando","En búsqueda","Propuesta preparada","Esperando aprobación","Aprobada","Compras en curso","Recibido y revisando","Preparando envío","Enviado","Completado","Cancelado"];
+function getOrders(){try{return JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY)||"[]")}catch(e){return []}}
+function saveOrders(orders){localStorage.setItem(ORDER_STORAGE_KEY,JSON.stringify(orders))}
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]))}
+function openImageDB(){return new Promise((resolve,reject)=>{if(!("indexedDB" in window)){reject(new Error("Este navegador no permite guardar imágenes localmente."));return}const req=indexedDB.open(IMAGE_DB_NAME,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(IMAGE_STORE_NAME))db.createObjectStore(IMAGE_STORE_NAME,{keyPath:"orderId"})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error||new Error("No se pudo abrir el almacenamiento de imágenes."))})}
+async function saveOrderImages(orderId,files){if(!files.length)return;const db=await openImageDB();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE_NAME,"readwrite");tx.objectStore(IMAGE_STORE_NAME).put({orderId,images:files.map(file=>({name:file.name,type:file.type,blob:file}))});tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error||new Error("No se pudieron guardar las imágenes."))};tx.onabort=()=>{db.close();reject(tx.error||new Error("Se canceló el guardado de las imágenes."))}})}
+async function getOrderImages(orderId){const db=await openImageDB();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE_NAME,"readonly");const req=tx.objectStore(IMAGE_STORE_NAME).get(orderId);req.onsuccess=()=>{const result=req.result;db.close();resolve(result?.images||[])};req.onerror=()=>{db.close();reject(req.error||new Error("No se pudieron leer las imágenes."))}})}
+async function deleteOrderImages(orderId){try{const db=await openImageDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE_NAME,"readwrite");tx.objectStore(IMAGE_STORE_NAME).delete(orderId);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}catch(error){console.warn(error)}}
+function blobToDataURL(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob)})}
+let orderImageObjectUrls=[];
+async function renderOrders(){
+ const orders=getOrders(),list=document.getElementById("ordersList");
+ if(!list)return;
+ document.getElementById("ordersTotal").textContent=orders.length;
+ document.getElementById("ordersActive").textContent=orders.filter(o=>!['Completado','Cancelado'].includes(o.status)).length;
+ document.getElementById("ordersBudget").textContent=euro(orders.reduce((sum,o)=>sum+(Number(o.budget)||0),0));
+ orderImageObjectUrls.forEach(url=>URL.revokeObjectURL(url));orderImageObjectUrls=[];
+ if(!orders.length){list.innerHTML='<p class="empty-admin">Todavía no hay solicitudes. Cuando alguien envíe el formulario aparecerá aquí.</p>';return}
+ list.innerHTML=orders.slice().reverse().map(o=>`<article class="order-card"><div class="order-card-top"><div><span class="order-ref">${escapeHtml(o.ref)} · ${escapeHtml(o.created)}</span><h4>${escapeHtml(o.name)}</h4><div class="order-meta">${escapeHtml(o.email)} · Presupuesto: <strong>${euro(Number(o.budget)||0)}</strong> · ${escapeHtml(o.quantity||"Sin cantidad indicada")}</div><div class="order-contact">Teléfono: ${escapeHtml(o.phone||"No indicado")}</div><div class="order-meta">Talla habitual: ${escapeHtml(o.size||"—")}</div></div><span class="status ${o.status==='Revisando'?'review':''}">${escapeHtml(o.status)}</span></div><p class="order-description"><strong>Búsqueda:</strong> ${escapeHtml(o.wish)}${o.notes?'\n\nNotas: '+escapeHtml(o.notes):''}</p><div class="order-attachments" data-order-images="${escapeHtml(o.id)}"><span class="order-no-attachments">Cargando imágenes…</span></div><div class="order-controls"><label class="order-meta" for="status-${escapeHtml(o.id)}">Cambiar estado</label><select id="status-${escapeHtml(o.id)}" data-order-status="${escapeHtml(o.id)}">${ORDER_STATUSES.map(st=>`<option ${st===o.status?'selected':''}>${escapeHtml(st)}</option>`).join('')}</select><button class="order-action" data-delete-order="${escapeHtml(o.id)}" type="button">Eliminar solicitud</button></div></article>`).join("");
+ for(const box of list.querySelectorAll("[data-order-images]")){
+  try{const images=await getOrderImages(box.dataset.orderImages);box.innerHTML="";if(!images.length){box.innerHTML='<span class="order-no-attachments">El cliente no adjuntó imágenes.</span>';continue}
+   images.forEach((item,index)=>{const url=URL.createObjectURL(item.blob);orderImageObjectUrls.push(url);const link=document.createElement("a");link.className="order-attachment";link.href=url;link.target="_blank";link.rel="noopener";link.title="Abrir imagen en tamaño completo";const img=document.createElement("img");img.src=url;img.alt=`Imagen de referencia ${index+1}`;const caption=document.createElement("span");caption.textContent=item.name||`Imagen ${index+1}`;link.append(img,caption);box.appendChild(link)})
+  }catch(error){box.innerHTML='<span class="order-no-attachments">No se pudieron cargar las imágenes en este navegador.</span>';console.warn(error)}
+ }
+}
+const referenceInput=document.getElementById("referenceImages");
+let uploadPreviewUrls=[];
+function clearUploadPreview(){uploadPreviewUrls.forEach(url=>URL.revokeObjectURL(url));uploadPreviewUrls=[];document.getElementById("uploadPreview").innerHTML=""}
+referenceInput.addEventListener("change",()=>{
+ const files=Array.from(referenceInput.files||[]);clearUploadPreview();
+ if(files.length>5||files.some(file=>!file.type.startsWith("image/")||file.size>5*1024*1024)){
+  showToast("Máximo 5 imágenes y 5 MB por imagen.");referenceInput.value="";return;
+ }
+ const preview=document.getElementById("uploadPreview");
+ files.forEach(file=>{const url=URL.createObjectURL(file);uploadPreviewUrls.push(url);const figure=document.createElement("figure");const img=document.createElement("img");img.src=url;img.alt="Vista previa de referencia";const caption=document.createElement("figcaption");caption.textContent=file.name;figure.append(img,caption);preview.appendChild(figure)})
+});
+document.getElementById("requestForm").addEventListener("submit",async e=>{
+ e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;
+ const files=Array.from(referenceInput.files||[]);if(files.length>5||files.some(file=>!file.type.startsWith("image/")||file.size>5*1024*1024)){showToast("Revisa las imágenes: máximo 5 de hasta 5 MB.");return}
+ const data=new FormData(form),orders=getOrders();
+ const order={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),ref:"REQ-"+String(Date.now()).slice(-6),created:new Date().toLocaleDateString("es-ES"),name:data.get("name"),email:data.get("email"),phone:data.get("phone"),budget:Number(data.get("budget")),quantity:data.get("quantity"),size:data.get("size"),wish:data.get("wish"),notes:data.get("notes"),status:"Nueva solicitud"};
+ let imageWarning="";
+ if(files.length){try{await saveOrderImages(order.id,files)}catch(error){console.error(error);imageWarning=" No se han podido conservar las imágenes en este navegador."}}
+ orders.push(order);saveOrders(orders);await renderOrders();
+ const box=document.getElementById("formMessage");box.textContent=`Solicitud ${order.ref} guardada en este navegador.${files.length&&!imageWarning?` Se han guardado ${files.length} imagen(es).`:""}${imageWarning} En esta demo no se envía al propietario ni se sincroniza con otros dispositivos.`;box.classList.add("show");
+ form.reset();clearUploadPreview();showToast("Solicitud guardada en este dispositivo");
+});
+document.getElementById("ordersList").addEventListener("change",e=>{const id=e.target.dataset.orderStatus;if(!id)return;const orders=getOrders(),o=orders.find(x=>x.id===id);if(o){o.status=e.target.value;saveOrders(orders);renderOrders();showToast("Estado actualizado")}});
+document.getElementById("ordersList").addEventListener("click",async e=>{const b=e.target.closest("[data-delete-order]");if(!b)return;const orders=getOrders(),o=orders.find(x=>x.id===b.dataset.deleteOrder);if(!o||!confirm(`¿Eliminar la solicitud ${o.ref}? Esta acción no se puede deshacer.`))return;saveOrders(orders.filter(x=>x.id!==o.id));await deleteOrderImages(o.id);await renderOrders();showToast("Solicitud eliminada")});
+document.getElementById("exportOrders").addEventListener("click",async()=>{
+ try{const orders=getOrders(),exportRows=[];for(const order of orders){let attachments=[];try{const images=await getOrderImages(order.id);attachments=await Promise.all(images.map(async item=>({name:item.name,type:item.type,data:await blobToDataURL(item.blob)})))}catch(error){console.warn(error)}exportRows.push({...order,attachments})}
+  const blob=new Blob([JSON.stringify(exportRows,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="archive001-solicitudes-demo.json";a.click();URL.revokeObjectURL(url);showToast("Copia JSON exportada")
+ }catch(error){console.error(error);showToast("No se pudo exportar la copia")}
+});
+function updateCostTotal(){const ids=["costItems","costInbound","costCommission","costOther","costPackaging","costOutbound"],total=ids.reduce((sum,id)=>sum+Math.max(0,Number(document.getElementById(id).value)||0),0);document.getElementById("costTotal").textContent=new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR"}).format(total)}
+["costItems","costInbound","costOther","costPackaging","costOutbound"].forEach(id=>document.getElementById(id).addEventListener("input",updateCostTotal));
+document.getElementById("costCommission").addEventListener("change",updateCostTotal);
+const ownerView=new URLSearchParams(window.location.search).get("view")==="owner";
+if(ownerView){
+ document.body.classList.add("owner-mode");document.querySelector("header").hidden=true;document.querySelector("main").hidden=true;document.querySelector("footer").hidden=true;document.getElementById("productModal").hidden=true;document.getElementById("toast").hidden=true;document.getElementById("ownerApp").hidden=false;
+}
+document.getElementById("ownerLoginForm").addEventListener("submit",async e=>{e.preventDefault();const message=document.getElementById("ownerLoginMessage");if(document.getElementById("ownerPin").value!==DEMO_OWNER_PIN){message.textContent="Clave incorrecta. Prueba la clave provisional indicada debajo del campo.";message.classList.add("show");return}document.getElementById("ownerLogin").hidden=true;document.getElementById("ownerDashboard").hidden=false;await renderOrders();updateCostTotal()});
+document.getElementById("ownerLogout").addEventListener("click",()=>{window.location.href=window.location.pathname});
+document.getElementById("year").textContent=new Date().getFullYear();
+if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+ const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});
+ document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+}else{document.querySelectorAll(".reveal").forEach(el=>el.classList.add("visible"))}
+if(!ownerView){renderProducts();}
+if(!ownerView){renderOrders();}
+</script>
+</body>
+</html>
